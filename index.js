@@ -1,16 +1,19 @@
-import http from 'node:http'
-import {Server} from 'socket.io'
+import http from "node:http";
+import { Server } from "socket.io";
+import express from "express";
+import path from "node:path";
 
 async function main() {
-    const server = http.createServer()
-    const io = new Server()
+  const server = http.createServer();
+  const io = new Server();
+  const app = express();
 
-    io.attach(server)
+  app.use(express.static(path.resolve("./public")));
 
-    server.listen(9000, ()=>{
-        console.log('Http server is running on PORT 9000');
-        
-    })
-    
+  io.attach(server);
+
+  server.listen(9000, () => {
+    console.log("Http server is running on PORT 9000");
+  });
 }
-main()
+main();
